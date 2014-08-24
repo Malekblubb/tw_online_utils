@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<p id="address"></p>
+  	<p id="version"></p>
+  	<p id="name"></p>
+  	<p id="map"></p>
+  	<p id="gametype"></p>
+    <script>
+    	var serverInfo = {{{serverinf}}};
+    	document.getElementById("address").innerHTML = serverInfo[0];
+    	document.getElementById("version").innerHTML = serverInfo[1];
+    	document.getElementById("name").innerHTML = serverInfo[2];
+    	document.getElementById("map").innerHTML = serverInfo[3];
+    	document.getElementById("gametype").innerHTML = serverInfo[4];
+
+      var playerInfo = {{{playerinf}}};
+      playerInfo.forEach(function(player) {
+        document.write(player + "<br />");
+      })
+    </script>
+  </body>
+</html>
