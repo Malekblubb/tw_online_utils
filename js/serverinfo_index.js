@@ -9,6 +9,7 @@ serverInfoIndex = {
 	maxPlayers : 7,
 	numClients : 8,
 	maxClients : 9,
+	ping : 10,
 
 	// player infos
 	name : 0,

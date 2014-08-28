@@ -48,8 +48,9 @@ function TwServer() {
 
 	this.sendRequests = function() {
 		for(var i = 0; i < addresses.length; ++i) {
+			addresses[i].sendTime = utils.timeMs();
 			socket.send(requestBuffer, 0, requestBuffer.length, addresses[i].port, addresses[i].address, function(err, bytes) {
-				if(bytes === 15) console.log("Sent inforequest");
+				if(bytes === 15)console.log("Sent inforequest");
 				else console.error("Error while sending inforequest: " + err);
 			});
 		}
@@ -98,7 +99,7 @@ function TwServer() {
 				var end = bufferUtils.bufferSearch(0x00, msg, start);
 				if(end == -1)
 					break;
-				
+
 				if(index == 5) {
 					index = 0;
 					++playerIndex;
@@ -109,22 +110,25 @@ function TwServer() {
 				start = end + 1;
 			}
 		}
-
-		console.log(serverInfos[addressStr].players[1][sii.clan]);
-
 		
-
-
-		// add the address manually
+		// add some info manually
 		serverInfos[addressStr][sii.address] = rinfo.address + ":" + rinfo.port;
+		serverInfos[addressStr][sii.ping] = utils.timeMs() - getSendTime(rinfo);
 
 		// tell the user that the serverinfo arrived
-		eventEmitter.emit("gotInfo", serverInfos[addressStr]);
+		eventEmitter.emit("gotInfo", serverInfos);
+	}
+
+	function getSendTime(address) {
+		for(var i = 0; i < addresses.length; ++i) {
+			if((addresses[i].address === address.address) && (addresses[i].port == address.port))
+				return addresses[i].sendTime; 
+		}
 	}
 }
 
-TwServer.createServerListener = function(targetAddress) {
-	return new TwServer(targetAddress);
+TwServer.createServerListener = function() {
+	return new TwServer();
 }
 
 module.exports = TwServer;

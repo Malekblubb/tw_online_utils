@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ECON</title>
+  </head>
+  <body>
+  	<form action="/econ_login_action" method="post">
+  		Host: <input type="text" name="econHost">
+  		Port: <input type="text" name="econPort"><br />
+  		Password: <input type="password" name="econPassword">
+  		<input type="submit" value="Connect">
+  	</form>
+
+    <script>
+    
+    </script>
+  </body>
+</html>
